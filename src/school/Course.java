@@ -1,49 +1,53 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package school;
 import java.util.ArrayList;
-
-public class Course 
-{
-    enum Type 
-    {
+public class Course {
+    enum Type {
         Math,Science,English,History,Language,Elective,PE
-    } 
- private static ArrayList<Course> Courses = new ArrayList<Course>();
+    }
+    private static ArrayList<Course> courses = new ArrayList<Course>();
     private String name;
-    private Type Type;
-    private int Period;
+    private Type type;
+    private int period;
     
-    
-    
-public static Course addCourse(String _name,
+    private Student theStudent;
+
+    public static Course addCourse(String _name,
     Type _type, int _period)
     {
         Course temp = new Course(_name,_type,_period);
-        Courses.add(temp);
+        courses.add(temp);
         return(temp);
     }
     Course()
     {
         name = "None";
-        Type = Type.Math;
-        Period = 1;
+        type = Type.Elective;
+        period = 1;
     }
-    Course(String _name,Type _type,int _period)
+    Course(String _name,Type _type, int _period)
     {
         name = _name;
-        Type = _type;
-        Period = _period;
+        type = _type;
+        period = _period;
     }   
+
+    public void addStudent(Student _student)
+    {
+        if (theStudent == null)
+        {
+            theStudent = _student;
+            _student.addCourse(this);
+        }
+    }        
+    
     public void setPeriod(int _period)
     {
-        Period = _period;
+        period = _period;
     }
     public int getPeriod()
     {
-        return(Period);
+        return(period);
     }       
     public void setName(String _name)
     {
@@ -55,34 +59,22 @@ public static Course addCourse(String _name,
     }    
     public void setType(Type _type)
     {
-        Type = _type;
+        type = _type;
     }
     public Type getType()
     {
-        return(Type);
+        return(type);
     }  
     public static void printNames()
     {
         System.out.println("===printNames===");
-        for (int index=0;index<Courses.size();index++)
+        for (Course temp : courses)
         {
-                System.out.println(Courses.get(index).getName());
-        }        
-    }
-    public static void printNames(Type _type)
-    {
-        System.out.println(
-        "===printNamesOfType=== " + _type);
-        for (Course temp : Courses)
-        {
-            if (temp.Type == _type)
                 System.out.println(temp.getName());
-        }
-             
+        }        
     }    
     public String toString()
     {
-        return(name + " " + Type + " " + Period);
-    }
- 
+        return(name + " " + type + " " + period + " " + theStudent.getName());
+    }    
 }
